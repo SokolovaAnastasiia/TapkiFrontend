@@ -1,2 +1,2 @@
 # TapkiFrontend
-Project description
+Project description.
