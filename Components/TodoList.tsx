@@ -22,20 +22,46 @@ interface TodoListProps {
 const TodoList: React.FC<TodoListProps> = ({ token, onLogout }) =>  {
   const [todos, setTodos] = useState<Todo[]>([]);
 
+  // const fetchTodos = async () => {
+  //   try {
+  //     const response = await fetch('http://localhost:3000/tasks', {
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Bearer ${token}`,
+  //       },
+  //     });
+  //     const data = await response.json();
+  //     setTodos(data);
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
+  // };
+
   const fetchTodos = async () => {
     try {
       const response = await fetch('http://localhost:3000/tasks', {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
       });
-      const data = await response.json();
-      setTodos(data);
+  
+      if (response.ok) {
+        const data = await response.json();
+        setTodos(data);
+      } else if (response.status === 401) {
+        console.error('Unauthorized request:', response.status);
+        // Handle unauthorized request, e.g., redirect to login page
+      } else {
+        console.error('Failed to fetch todos:', response.status);
+        // Handle other errors
+      }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error('Error fetching todos:', error);
     }
   };
+  
 
   const addTask = async (name: string) => {
     try {

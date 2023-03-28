@@ -26,6 +26,7 @@ import { StyleSheet, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoList from './Components/TodoList';
 import LoginForm from './Components/LoginForm';
+import RegisterForm from './Components/RegisterForm';
 
 export default function App() {
   const [token, setToken] = useState<string | null>(null);
@@ -59,6 +60,38 @@ export default function App() {
     }
   };
 
+  const handleRegister = async (email: string, password: string, password_confirmation: string) => {
+    try {
+      const response = await fetch('http://localhost:3000/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          user: {
+            email,
+            password,
+            password_confirmation,
+          },
+        }),
+      });
+  
+      if (response.ok) {
+        const data = await response.json();
+        storeToken(data.auth_token);
+      } else if (response.status === 422) {
+        const errorData = await response.json();
+        console.error('Registration failed:', response.status, errorData.errors);
+      } else {
+        console.error('Registration failed:', response.status);
+      }
+    } catch (error) {
+      console.error('Error during registration:', error);
+    }
+  };
+  
+  
+
   useEffect(() => {
     fetchToken();
   }, []);
@@ -68,11 +101,15 @@ export default function App() {
       {token ? (
         <TodoList token={token} onLogout={onLogout} />
       ) : (
-        <LoginForm onLogin={storeToken} />
+        <>
+          <LoginForm onLogin={storeToken} />
+          <RegisterForm onRegister={handleRegister} />
+        </>
       )}
       <StatusBar style="auto" />
     </View>
   );
+  
 }
 
 const styles = StyleSheet.create({
