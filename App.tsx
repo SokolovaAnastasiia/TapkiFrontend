@@ -1,24 +1,4 @@
-// import { StatusBar } from 'expo-status-bar';
-// import React from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
-// import TodoList from './Components/TodoList';
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <TodoList />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
+// App.tsx
 
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
@@ -27,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoList from './Components/TodoList';
 import LoginForm from './Components/LoginForm';
 import RegisterForm from './Components/RegisterForm';
+import { SubTasksScreen } from './Components/SubTasksScreen';
 
 export default function App() {
   const [token, setToken] = useState<string | null>(null);
@@ -120,3 +101,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+// import { StatusBar } from 'expo-status-bar';
+// import React from 'react';
+// import { StyleSheet, Text, View } from 'react-native';
+// import TodoList from './Components/TodoList';
+
+// export default function App() {
+//   return (
+//     <View style={styles.container}>
+//       <TodoList />
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff',
+//     alignItems: 'center',
+//     justifyContent: 'center',
+//   },
+// });
