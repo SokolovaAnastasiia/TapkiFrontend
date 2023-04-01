@@ -12,8 +12,21 @@ const AddTaskStyles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#ccc',
     paddingBottom: 5,
+    color: "#fff"
   },
-  // Add other styles if needed
+  addButton: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    backgroundColor: '#2196F3',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  addButtonText: {
+    color: 'white',
+    fontSize: 32,
+    lineHeight: 32,
+  },
 });
 
 export default AddTaskStyles;

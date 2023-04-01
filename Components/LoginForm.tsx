@@ -1,7 +1,9 @@
 // LoginForm.tsx
 
 import React, { useState } from 'react';
-import { View, TextInput, Button } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import LabelInput from './LabelInput';
+
 
 interface LoginFormProps {
   onLogin: (token: string) => void;
@@ -30,22 +32,46 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     }
   };
 
+
   return (
-    <View>
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry
-      />
-      <Button title="Login" onPress={handleSubmit} />
+    <View style={styles.container}>
+        <LabelInput
+          label="Email"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+          placeholder="Email"
+        />
+        <LabelInput
+          label="Password"
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+          placeholder="Password"
+          secureTextEntry
+        />
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    backgroundColor: '#3b5998',
+    borderRadius: 25,
+    paddingHorizontal: 25,
+    paddingVertical: 10,
+    marginTop: 15,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+});
 
 export default LoginForm;

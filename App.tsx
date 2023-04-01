@@ -5,9 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoList from './Components/TodoList';
-import LoginForm from './Components/LoginForm';
-import RegisterForm from './Components/RegisterForm';
-import { SubTasksScreen } from './Components/SubTasksScreen';
+import AuthForm from './Components/AuthForm';
 
 export default function App() {
   const [token, setToken] = useState<string | null>(null);
@@ -82,10 +80,7 @@ export default function App() {
       {token ? (
         <TodoList token={token} onLogout={onLogout} />
       ) : (
-        <>
-          <LoginForm onLogin={storeToken} />
-          <RegisterForm onRegister={handleRegister} />
-        </>
+        <AuthForm onLogin={storeToken} onRegister={handleRegister} />
       )}
       <StatusBar style="auto" />
     </View>
@@ -96,30 +91,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#091941',
     alignItems: 'center',
-    justifyContent: 'center',
+    alignContent: 'center',
   },
 });
-
-// import { StatusBar } from 'expo-status-bar';
-// import React from 'react';
-// import { StyleSheet, Text, View } from 'react-native';
-// import TodoList from './Components/TodoList';
-
-// export default function App() {
-//   return (
-//     <View style={styles.container}>
-//       <TodoList />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });

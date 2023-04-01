@@ -1,7 +1,13 @@
-// RegisterForm.tsx
 
 import React, { useState } from 'react';
-import { View, TextInput, Button, Text } from 'react-native';
+import LabelInput from './LabelInput';
+import {
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
 
 interface RegisterFormProps {
   onRegister: (email: string, password: string, password_confirmation: string) => void;
@@ -17,30 +23,51 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onRegister }) => {
   };
 
   return (
-    <View>
-      <Text>Email:</Text>
-      <TextInput
-        onChangeText={(text) => setEmail(text)}
+    <View style={styles.container}>
+      <LabelInput
+        label="Email"
         value={email}
+        onChangeText={(text) => setEmail(text)}
         placeholder="Enter your email"
       />
-      <Text>Password:</Text>
-      <TextInput
-        onChangeText={(text) => setPassword(text)}
+      <LabelInput
+        label="Password"
         value={password}
-        secureTextEntry={true}
+        onChangeText={(text) => setPassword(text)}
         placeholder="Enter your password"
+        secureTextEntry
       />
-      <Text>Password Confirmation:</Text>
-      <TextInput
-        onChangeText={(text) => setPasswordConfirmation(text)}
+      <LabelInput
+        label="Password Confirmation"
         value={passwordConfirmation}
-        secureTextEntry={true}
+        onChangeText={(text) => setPasswordConfirmation(text)}
         placeholder="Confirm your password"
+        secureTextEntry
       />
-      <Button onPress={handleRegister} title="Register" />
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+        <Text style={styles.buttonText}>Register</Text>
+      </TouchableOpacity>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  button: {
+    backgroundColor: '#3b5998',
+    borderRadius: 25,
+    paddingHorizontal: 25,
+    paddingVertical: 10,
+    marginTop: 15,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 18,
+  },
+});
 
 export default RegisterForm;
