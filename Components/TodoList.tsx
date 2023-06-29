@@ -1,4 +1,4 @@
-//TodoList.tsx
+// TodoList.tsx
 
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Button, TouchableOpacity, Dimensions } from 'react-native';
@@ -6,6 +6,7 @@ import { View, Text, FlatList, Button, TouchableOpacity, Dimensions } from 'reac
 import AddTask from './AddTask';
 import TodoListStyles from '../Styles/TodoListStyles';
 import Task from './Task';
+import SettingsPage from '../Components/SettingPage';
 
 interface Todo {
   id: number;
@@ -26,6 +27,7 @@ const TodoList: React.FC<TodoListProps> = ({ token, onLogout }) =>  {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [selectedTasks, setSelectedTasks] = useState<Todo[]>([]);
   const [showingChildrenTasks, setShowingChildrenTasks] = useState<boolean>(false);
+  const [showCompleted, setShowCompleted] = useState(true);  // new state variable
 
   const backToMainTasks = () => {
     setSelectedTasks([]);
@@ -167,9 +169,10 @@ const displayChildrenTasks = async (id: number) => {
 
   const renderTasks = () => {
     const tasksToRender = showingChildrenTasks ? selectedTasks : todos;
-    const totalTasks = tasksToRender.length;
+    const filteredTasks = showCompleted ? tasksToRender : tasksToRender.filter(task => !task.completed);
+    const totalTasks = filteredTasks.length;
 
-    return tasksToRender.map((todo, index) => {
+    return filteredTasks.map((todo, index) => {
       const position = calculateTaskPosition(index, totalTasks);
       return (
         <Task
@@ -184,20 +187,20 @@ const displayChildrenTasks = async (id: number) => {
   };
 
   return (
-  <View style={TodoListStyles.container}>
-    <View style={TodoListStyles.header}>
-      <Text style={TodoListStyles.goBackButtonText} onPress={backToMainTasks}>
-          Back
+    <View style={TodoListStyles.container}>
+      <View style={TodoListStyles.header}>
+        <Text style={TodoListStyles.goBackButtonText} onPress={backToMainTasks}>
+            Back
         </Text>
-      <Button title="Logout" onPress={onLogout} />
-      
+        <SettingsPage onLogout={onLogout} showCompleted={showCompleted} setShowCompleted={setShowCompleted} />
+      </View>
+      <View style={TodoListStyles.tasksContainer}>{renderTasks()}</View>
+      <View style={TodoListStyles.addTaskContainer}>
+        <AddTask onAddTask={addTask} />
+      </View>
     </View>
-    <View style={TodoListStyles.tasksContainer}>{renderTasks()}</View>
-    <View style={TodoListStyles.addTaskContainer}>
-      <AddTask onAddTask={addTask} />
-    </View>
-  </View>
-);
+  );
 };
 
 export default TodoList;
+

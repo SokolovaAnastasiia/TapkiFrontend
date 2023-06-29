@@ -11,7 +11,7 @@ const TodoListStyles = StyleSheet.create({
     left: 10,
     justifyContent: 'space-between',
     alignItems: 'center',
-    width: '30%',
+    width: '80%',
     marginTop: 50,
   },
   goBackButtonText: {
