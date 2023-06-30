@@ -119,9 +119,9 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onLogout, showCompleted, se
       <Modal visible={modalVisible} animationType="slide" transparent>
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Settings</Text>
+            <Text style={styles.modalTitle}>Настройки</Text>
             <View style={styles.switchContainer}>
-              <Text>Show Completed:</Text>
+              <Text>Показать выполненные:</Text>
               <Switch
                 trackColor={{ false: "#767577", true: "#81b0ff" }}
                 thumbColor={showCompleted ? "#f5dd4b" : "#f4f3f4"}
@@ -131,7 +131,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onLogout, showCompleted, se
               />
             </View>
             <View style={styles.languageContainer}>
-              <Text>Language:</Text>
+              <Text>Язык:</Text>
               <TouchableOpacity onPress={() => handleLanguageChange('en')}>
                 <Text style={language === 'en' ? styles.languageButtonActive : styles.languageButton}>English</Text>
               </TouchableOpacity>
@@ -140,10 +140,10 @@ const SettingsPage: React.FC<SettingsPageProps> = ({ onLogout, showCompleted, se
               </TouchableOpacity>
             </View>
             <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-              <Text style={styles.logoutButtonText}>Logout</Text>
+              <Text style={styles.logoutButtonText}>Выйти</Text>
             </TouchableOpacity>
             <Pressable style={styles.modalCloseButton} onPress={() => setModalVisible(false)}>
-              <Text style={styles.modalCloseButtonText}>Close</Text>
+              <Text style={styles.modalCloseButtonText}>Закрыть</Text>
             </Pressable>
           </View>
         </View>

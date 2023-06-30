@@ -101,6 +101,7 @@ const TaskStyles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 20,
     paddingVertical: 10,
+    
   },
   circle: {
     position: "relative",
@@ -110,23 +111,29 @@ const TaskStyles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 60, 
     paddingHorizontal: 20,
-    paddingVertical: 10,
-    backgroundColor: "#FE75F6",
-  },
-  incompleteCircle: {
-    border: 1,
-    backgroundColor: '#FE75F6',
-    shadowColor: "#C546BC",
+    paddingVertical: 20,
+    backgroundColor: '#cd34db00',
+    shadowColor: "#9E17FF",
     shadowOffset: {
       width: 0,
       height: 0,
     },
-    shadowOpacity: 0.6,
-    shadowRadius: 20,
-    elevation: 22,
+    shadowOpacity: 16,
+    shadowRadius: 10,
+  },
+  incompleteCircle: {
+    border: 1,
+    backgroundColor: '#2C004D',
   },
   completedCircle: {
-    backgroundColor: '#2C004D',
+    backgroundColor: '#233667',
+    shadowColor: "#332796",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 16,
+    shadowRadius: 10,
   },
   text: {
     fontSize: 18,
@@ -160,6 +167,14 @@ const TaskStyles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     zIndex: -1,
   },
+  smallCircle: {
+    position: 'absolute',
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: 'green',
+  },
+  
 });
 
 export default TaskStyles;

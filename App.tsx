@@ -104,6 +104,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoList from './Components/TodoList';
 import AuthForm from './Components/AuthForm';
 import SettingsPage from './Components/SettingPage';
+import { BlurView } from 'expo-blur';
 
 export default function App() {
   const [token, setToken] = useState<string | null>(null);
@@ -207,6 +208,7 @@ export default function App() {
           
         </>
       ) : (
+        
         <AuthForm onLogin={storeToken} onRegister={handleRegister} />
       )}
       <StatusBar style="auto" />
@@ -217,14 +219,13 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#091941',
+    backgroundColor: '#233667',
     alignItems: 'center',
     justifyContent: 'flex-start', // Обновлено: выравнивание по верху
-    paddingTop: 20, // Обновлено: добавлен отступ сверху
   },  
   loadingContainer: {
     flex: 1,
-    backgroundColor: '#091941',
+    backgroundColor: '#233667',
     alignItems: 'center',
     justifyContent: 'center',
   },
