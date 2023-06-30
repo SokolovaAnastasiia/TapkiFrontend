@@ -112,7 +112,6 @@ const TaskStyles = StyleSheet.create({
     borderRadius: 60, 
     paddingHorizontal: 20,
     paddingVertical: 20,
-    backgroundColor: '#cd34db00',
     shadowColor: "#9E17FF",
     shadowOffset: {
       width: 0,
@@ -121,9 +120,34 @@ const TaskStyles = StyleSheet.create({
     shadowOpacity: 16,
     shadowRadius: 10,
   },
+  containerCircle: {
+    width: 120,
+    height: 120,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 60, 
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    shadowColor: "#9E17FF",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 16,
+    shadowRadius: 10,
+    overflow: 'hidden',
+  },
   incompleteCircle: {
     border: 1,
-    backgroundColor: '#2C004D',
+    // backgroundColor: '#2C004D',
+    backgroundColor: 'rgba(44, 0, 77, 0.25)',
+    shadowColor: "#DB00FF",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 16,
+    shadowRadius: 10,
   },
   completedCircle: {
     backgroundColor: '#233667',
@@ -173,6 +197,7 @@ const TaskStyles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     backgroundColor: 'green',
+    overflow: 'hidden',
   },
   
 });
