@@ -18,14 +18,31 @@ const AddTaskStyles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#2196F3',
+    backgroundColor: '#233667',
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: "#fff",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
+  
   addButtonText: {
     color: 'white',
     fontSize: 32,
     lineHeight: 32,
+    shadowColor: "#fff",
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 1,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 

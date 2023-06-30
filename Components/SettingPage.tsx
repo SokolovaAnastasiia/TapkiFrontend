@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Pressable, Switch } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Pressable, Switch, Platform } from 'react-native';
+import { BlurView } from 'expo-blur';
+import { Image } from 'react-native';
+
 
 interface SettingsPageProps {
   onLogout: () => void;
@@ -98,73 +101,87 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
   return (
     <View>
       <TouchableOpacity style={styles.settingsButton} onPress={() => setModalVisible(true)}>
-        <Text style={styles.settingsButtonText}>{translations.settings}</Text>
+      <Image source={{uri: 'https://media.discordapp.net/attachments/1090678543580663832/1124210093869772850/Gear-icon.png?width=142&height=142'}} style={styles.settingsIcon} />
       </TouchableOpacity>
+
+
       <Modal visible={modalVisible} animationType="slide" transparent>
         <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>{translations.settings}</Text>
-            <TouchableOpacity style={styles.languageContainer} onPress={toggleLanguageDropdown}>
-              <Text>{translations.languageLabel}</Text>
-              <Text style={styles.selectedLanguage}>{language}</Text>
-              <Text style={styles.dropdownIcon}>{languageDropdownVisible ? '▲' : '▼'}</Text>
-            </TouchableOpacity>
-            {languageDropdownVisible && (
-              <View style={styles.languageOptions}>
-                <TouchableOpacity onPress={() => handleLanguageChange('en')}>
-                  <Text style={language === 'en' ? styles.languageButtonActive : styles.languageButton}>
-                    {translations.languageEnglish}
-                  </Text>
+          <BlurView style={styles.blurContainer} intensity={100} tint="dark">
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>{translations.settings}</Text>
+              <TouchableOpacity style={styles.languageContainer} onPress={toggleLanguageDropdown}>
+                <Text style={styles.labelText}>{translations.languageLabel}</Text>
+                <View style={styles.languageSelection}>
+                  <Text style={styles.selectedLanguage}>{language}</Text>
+                  <Text style={styles.dropdownIcon}>{languageDropdownVisible ? '▲' : '▼'}</Text>
+                </View>
+              </TouchableOpacity>
+              {languageDropdownVisible && (
+                <View style={styles.languageOptions}>
+                  <TouchableOpacity onPress={() => handleLanguageChange('en')}>
+                    <Text style={language === 'en' ? styles.languageButtonActive : styles.languageButton}>
+                      {translations.languageEnglish}
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleLanguageChange('ru')}>
+                    <Text style={language === 'ru' ? styles.languageButtonActive : styles.languageButton}>
+                      {translations.languageRussian}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              )}
+              <View style={styles.switchContainer}>
+                <Text style={styles.labelText}>{translations.showCompleted}</Text>
+                <Switch
+                  trackColor={{ false: '#767577', true: '#81b0ff' }}
+                  thumbColor={showCompleted ? '#f5dd4b' : '#f4f3f4'}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleShowCompleted}
+                  value={showCompleted}
+                />
+              </View>
+              <View style={styles.switchContainer}>
+                <Text style={styles.labelText}>{translations.notifications}</Text>
+                <Switch
+                  trackColor={{ false: '#767577', true: '#81b0ff' }}
+                  thumbColor={notificationsEnabled ? '#f5dd4b' : '#f4f3f4'}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleNotificationsEnabled}
+                  value={notificationsEnabled}
+                />
+              </View>
+              <View style={styles.switchContainer}>
+                <Text style={styles.labelText}>{translations.soundEffects}</Text>
+                <Switch
+                  trackColor={{ false: '#767577', true: '#81b0ff' }}
+                  thumbColor={soundEffectsEnabled ? '#f5dd4b' : '#f4f3f4'}
+                  ios_backgroundColor="#3e3e3e"
+                  onValueChange={toggleSoundEffectsEnabled}
+                  value={soundEffectsEnabled}
+                />
+              </View>
+              {/* Дополнительные пункты настроек */}
+              <View style={styles.additionalSettingsContainer}>
+                <Text style={styles.labelText}>{translations.appearance}</Text>
+                {/* Выпадающий список с оформлением */}
+              </View>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+                  <Text style={styles.logoutButtonText}>{translations.logout}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleLanguageChange('ru')}>
-                  <Text style={language === 'ru' ? styles.languageButtonActive : styles.languageButton}>
-                    {translations.languageRussian}
-                  </Text>
+                <TouchableOpacity style={styles.helpButton}>
+                  <Text style={styles.helpButtonText}>Помощь</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.reviewButton}>
+                  <Text style={styles.reviewButtonText}>Оставить отзыв</Text>
                 </TouchableOpacity>
               </View>
-            )}
-            <View style={styles.switchContainer}>
-              <Text>{translations.showCompleted}</Text>
-              <Switch
-                trackColor={{ false: '#767577', true: '#81b0ff' }}
-                thumbColor={showCompleted ? '#f5dd4b' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleShowCompleted}
-                value={showCompleted}
-              />
+              <Pressable style={styles.modalCloseButton} onPress={() => setModalVisible(false)}>
+                <Text style={styles.modalCloseButtonText}>{translations.close}</Text>
+              </Pressable>
             </View>
-            <View style={styles.switchContainer}>
-              <Text>{translations.notifications}</Text>
-              <Switch
-                trackColor={{ false: '#767577', true: '#81b0ff' }}
-                thumbColor={notificationsEnabled ? '#f5dd4b' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleNotificationsEnabled}
-                value={notificationsEnabled}
-              />
-            </View>
-            <View style={styles.switchContainer}>
-              <Text>{translations.soundEffects}</Text>
-              <Switch
-                trackColor={{ false: '#767577', true: '#81b0ff' }}
-                thumbColor={soundEffectsEnabled ? '#f5dd4b' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSoundEffectsEnabled}
-                value={soundEffectsEnabled}
-              />
-            </View>
-            {/* Дополнительные пункты настроек */}
-            <View style={styles.additionalSettingsContainer}>
-              <Text>{translations.appearance}</Text>
-              {/* Выпадающий список с оформлением */}
-            </View>
-            <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-              <Text style={styles.logoutButtonText}>{translations.logout}</Text>
-            </TouchableOpacity>
-            <Pressable style={styles.modalCloseButton} onPress={() => setModalVisible(false)}>
-              <Text style={styles.modalCloseButtonText}>{translations.close}</Text>
-            </Pressable>
-          </View>
+          </BlurView>
         </View>
       </Modal>
     </View>
@@ -173,7 +190,7 @@ const SettingsPage: React.FC<SettingsPageProps> = ({
 
 const styles = StyleSheet.create({
   settingsButton: {
-    backgroundColor: '#FFFFFF',
+    // backgroundColor: '#FFFFFF',
     padding: 8,
     borderRadius: 4,
   },
@@ -183,36 +200,79 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'rgba(9, 25, 65)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  blurContainer: {
+    flex: 1,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
   },
   modalContent: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#091941',
     padding: 16,
     borderRadius: 4,
+    width: Platform.select({ web: '40%', default: '80%' }),
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 16,
     textAlign: 'center',
+    color: '#FFFFFF',
   },
   logoutButton: {
     backgroundColor: '#FFFFFF',
+    borderColor: '#FFFFFF',
+    borderWidth: 1,
     padding: 8,
     borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
   },
   logoutButtonText: {
     color: '#091941',
     fontSize: 16,
+    textAlign: 'center',
+  },
+  helpButton: {
+    backgroundColor: 'transparent',
+    borderColor: '#FFFFFF',
+    borderWidth: 1,
+    padding: 8,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  helpButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  reviewButton: {
+    backgroundColor: 'transparent',
+    borderColor: '#FFFFFF',
+    borderWidth: 1,
+    padding: 8,
+    borderRadius: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  reviewButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    textAlign: 'center',
   },
   modalCloseButton: {
     marginTop: 16,
     alignSelf: 'center',
   },
   modalCloseButtonText: {
-    color: '#091941',
+    color: '#FFFFFF',
     fontSize: 16,
     textDecorationLine: 'underline',
   },
@@ -222,13 +282,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginVertical: 10,
   },
+  labelText: {
+    color: '#FFFFFF',
+  },
+  languageSelection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   selectedLanguage: {
-    padding: 10,
-    color: '#091941',
+    paddingHorizontal: 10,
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
   dropdownIcon: {
     fontSize: 16,
+    color: '#FFFFFF',
   },
   languageOptions: {
     marginTop: 10,
@@ -253,144 +321,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginVertical: 10,
   },
+  buttonContainer: {
+    marginTop: 16,
+  },
+  settingsIcon: Platform.select({
+    default: {
+      width: 30,
+      height: 30,
+    },
+    web: {
+      width: 60,
+      height: 60,
+    }
+    
+  })
+    
 });
 
 export default SettingsPage;
- 
-// import React, { useState } from 'react';
-// import { View, Text, TouchableOpacity, StyleSheet, Modal, Pressable, Switch } from 'react-native';
-
-// interface SettingsPageProps {
-//   onLogout: () => void;
-//   showCompleted: boolean;
-//   setShowCompleted: (value: boolean) => void;
-// }
-
-// const SettingsPage: React.FC<SettingsPageProps> = ({ onLogout, showCompleted, setShowCompleted }) => {
-//   const [modalVisible, setModalVisible] = useState(false);
-//   const [language, setLanguage] = useState('ru');
-
-//   const handleLogout = () => {
-//     onLogout();
-//   };
-
-//   const toggleSwitch = () => setShowCompleted(!showCompleted);
-
-//   const handleLanguageChange = (lang: string) => {
-//     setLanguage(lang);
-//   };
-
-//   return (
-//     <View>
-//       <TouchableOpacity style={styles.settingsButton} onPress={() => setModalVisible(true)}>
-//         <Text style={styles.settingsButtonText}>Settings</Text>
-//       </TouchableOpacity>
-//       <Modal visible={modalVisible} animationType="slide" transparent>
-//         <View style={styles.modalContainer}>
-//           <View style={styles.modalContent}>
-//             <Text style={styles.modalTitle}>Настройки</Text>
-//             <View style={styles.switchContainer}>
-//               <Text>Показать выполненные:</Text>
-//               <Switch
-//                 trackColor={{ false: "#767577", true: "#81b0ff" }}
-//                 thumbColor={showCompleted ? "#f5dd4b" : "#f4f3f4"}
-//                 ios_backgroundColor="#3e3e3e"
-//                 onValueChange={toggleSwitch}
-//                 value={showCompleted}
-//               />
-//             </View>
-//             <View style={styles.languageContainer}>
-//               <Text>Язык:</Text>
-//               <TouchableOpacity onPress={() => handleLanguageChange('en')}>
-//                 <Text style={language === 'en' ? styles.languageButtonActive : styles.languageButton}>English</Text>
-//               </TouchableOpacity>
-//               <TouchableOpacity onPress={() => handleLanguageChange('ru')}>
-//                 <Text style={language === 'ru' ? styles.languageButtonActive : styles.languageButton}>Русский</Text>
-//               </TouchableOpacity>
-//             </View>
-//             <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-//               <Text style={styles.logoutButtonText}>Выйти</Text>
-//             </TouchableOpacity>
-//             <Pressable style={styles.modalCloseButton} onPress={() => setModalVisible(false)}>
-//               <Text style={styles.modalCloseButtonText}>Закрыть</Text>
-//             </Pressable>
-//           </View>
-//         </View>
-//       </Modal>
-//     </View>
-//   );
-// };
-
-
-// const styles = StyleSheet.create({
-//     settingsButton: {
-//         // position: 'absolute',
-//         // top: 0, // Обновлено: изменено на 0
-//         // right: 0, // Обновлено: изменено на 0
-//         backgroundColor: '#FFFFFF',
-//         padding: 8,
-//         borderRadius: 4,
-//         },
-      
-//   settingsButtonText: {
-//     color: '#091941',
-//     fontSize: 16,
-//   },
-//   modalContainer: {
-//     flex: 1,
-//     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-//   modalContent: {
-//     backgroundColor: '#FFFFFF',
-//     padding: 16,
-//     borderRadius: 4,
-//   },
-//   modalTitle: {
-//     fontSize: 20,
-//     fontWeight: 'bold',
-//     marginBottom: 16,
-//     textAlign: 'center',
-//   },
-//   logoutButton: {
-//     backgroundColor: '#FFFFFF',
-//     padding: 8,
-//     borderRadius: 4,
-//   },
-//   logoutButtonText: {
-//     color: '#091941',
-//     fontSize: 16,
-//   },
-//   modalCloseButton: {
-//     marginTop: 16,
-//     alignSelf: 'center',
-//   },
-//   modalCloseButtonText: {
-//     color: '#091941',
-//     fontSize: 16,
-//     textDecorationLine: 'underline',
-//   },
-//   switchContainer: {
-//     flexDirection: "row",
-//     alignItems: "center",
-//     justifyContent: "space-between",
-//     marginVertical: 10,
-//   },
-//   languageContainer: {
-//     flexDirection: "row",
-//     alignItems: "center",
-//     justifyContent: "space-between",
-//     marginVertical: 10,
-//   },
-//   languageButton: {
-//     padding: 10,
-//     color: 'grey'
-//   },
-//   languageButtonActive: {
-//     padding: 10,
-//     color: 'blue'
-//   }
-// });
-
-// export default SettingsPage;

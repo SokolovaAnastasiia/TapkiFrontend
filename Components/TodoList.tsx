@@ -7,6 +7,7 @@ import AddTask from './AddTask';
 import TodoListStyles from '../Styles/TodoListStyles';
 import Task from './Task';
 import SettingsPage from '../Components/SettingPage';
+import { Image } from 'react-native';
 
 interface Todo {
   id: number;
@@ -189,9 +190,12 @@ const displayChildrenTasks = async (id: number) => {
   return (
     <View style={TodoListStyles.container}>
       <View style={TodoListStyles.header}>
-        <Text style={TodoListStyles.goBackButtonText} onPress={backToMainTasks}>
-            Back
-        </Text>
+          <TouchableOpacity onPress={backToMainTasks}>
+            <Image
+              source={require('../assets/img/back-icon.png')} // Замените текст на вашу иконку
+              style={{width: 16, height: 30, marginTop: 5}} // Вы можете изменить размер иконки, изменив эти значения
+            />
+        </TouchableOpacity>
         <SettingsPage onLogout={onLogout} showCompleted={showCompleted} setShowCompleted={setShowCompleted} />
       </View>
       <View style={TodoListStyles.tasksContainer}>{renderTasks()}</View>

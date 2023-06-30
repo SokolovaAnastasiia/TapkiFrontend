@@ -97,14 +97,18 @@
 //   },
 // });
 
+
+
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, ActivityIndicator, Text } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import TodoList from './Components/TodoList';
 import AuthForm from './Components/AuthForm';
-import SettingsPage from './Components/SettingPage';
 import { BlurView } from 'expo-blur';
+import { LogBox } from 'react-native';
+import BackgroundBlur from './Components/BackgroundBlur'; 
+LogBox.ignoreAllLogs();
 
 
 export default function App() {
@@ -183,7 +187,7 @@ export default function App() {
 
       setTimeout(() => {
         setIsLoading(false); // Завершение загрузки после задержки в 2 секунды
-      }, 1000);
+      }, 4000);
     };
 
     fetchData();
@@ -201,6 +205,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <BackgroundBlur intensity={70} />
       {token ? (
         <>
           <View style={styles.todoListContainer}>
