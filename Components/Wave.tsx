@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { View } from 'react-native';
-import WaveStyles from '../Styles/WaveStyles';
+// import WaveStyles from '../Styles/WaveStyles';
 
 interface WaveProps {
   show: boolean;

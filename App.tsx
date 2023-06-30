@@ -106,6 +106,7 @@ import AuthForm from './Components/AuthForm';
 import SettingsPage from './Components/SettingPage';
 import { BlurView } from 'expo-blur';
 
+
 export default function App() {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true); // Состояние для отслеживания загрузки
